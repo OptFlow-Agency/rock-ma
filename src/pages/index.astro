@@ -1,0 +1,537 @@
+---
+import { Image } from "astro:assets";
+import { ArrowRight, ArrowUpRight, ArrowUp, Truck, ShieldCheck, Headset, RotateCcw } from "@lucide/astro";
+import "../styles/global.css";
+import ProductCard from "../components/ProductCard.astro";
+
+import heroImg from "../assets/img/hero.jpg";
+import guitarsPhoto from "../assets/categories/guitars-basses.jpg";
+import audioPhoto from "../assets/categories/audio.jpg";
+import productionPhoto from "../assets/categories/production.jpg";
+import ctaImg from "../assets/cta-bg.jpg";
+import guitar from "../assets/img/guitars.webp";
+import mic from "../assets/img/microphone.webp";
+import headphones from "../assets/img/headphones.webp";
+import keyboard from "../assets/img/keyboard.webp";
+
+const nav = [
+  { label: "Guitars & Basses", href: "#categories" },
+  { label: "Audio", href: "#categories" },
+  { label: "Studio Equipment", href: "#categories" },
+  { label: "Best sellers", href: "#best-sellers" },
+];
+
+const slides = [heroImg, guitarsPhoto, audioPhoto];
+
+const categories = [
+  { title: "Guitars & Basses", image: guitarsPhoto, pos: "center 40%" },
+  { title: "Audio", image: audioPhoto, pos: "center 55%" },
+  { title: "Studio Equipment", image: productionPhoto, pos: "center 50%" },
+];
+
+const products = [
+  { image: guitar, alt: "Black Jackson electric guitar", category: "Guitars", name: "Jackson JS22 Dinky Black", price: "2.650 DHS", reviews: 128 },
+  { image: mic, alt: "Studio condenser microphone with shock mount", category: "Guitars", name: "Jackson JS22 Dinky Black", price: "2.650 DHS", reviews: 86 },
+  { image: headphones, alt: "Over-ear studio headphones", category: "Audio", name: "Studio Monitor Headphones", price: "2.650 DHS", reviews: 94 },
+  { image: keyboard, alt: "MIDI keyboard controller", category: "Production", name: "MIDI Keyboard Controller", price: "2.650 DHS", reviews: 63 },
+];
+
+const reasons = [
+  { icon: Truck, title: "Fast, reliable shipping", text: "Get your gear delivered safely and on time." },
+  { icon: ShieldCheck, title: "Authentic gear, guaranteed", text: "Shop with confidence and find equipment you can trust." },
+  { icon: Headset, title: "Real people, real support", text: "Get help choosing the right gear for your needs." },
+  { icon: RotateCcw, title: "Hassle-free returns", text: "Shop with peace of mind." },
+];
+
+const footerCols = [
+  { title: "Shop", links: [["Guitars & Basses", "#categories"], ["Audio", "#categories"], ["Studio Equipment", "#categories"], ["Best sellers", "#best-sellers"]] },
+  { title: "Help", links: [["Shipping", "#why"], ["Returns", "#why"], ["Support", "#why"], ["Contact", "#newsletter"]] },
+  { title: "Follow", links: [["Instagram", "#"], ["YouTube", "#"], ["TikTok", "#"]] },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#030105" />
+    <meta name="description" content="Rock Ma — guitars, basses, audio and studio gear in Morocco. Find the equipment that brings your sound to life." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/GraenMetal-Regular.otf" as="font" type="font/otf" crossorigin />
+    <link rel="preload" href="/fonts/caudex-400.woff2" as="font" type="font/woff2" crossorigin />
+    <title>Rock Ma — Make your sound</title>
+  </head>
+  <body>
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:bg-bone focus:px-3 focus:py-2 focus:text-ink">Skip to content</a>
+
+    <!-- HERO -->
+    <section id="hero" class="hero relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-ink text-bone" aria-label="Rock Ma">
+      <div class="hero__slides absolute -inset-y-[8%] inset-x-0 -z-10 will-change-transform" aria-hidden="true">
+        {slides.map((s, i) => (
+          <Image
+            src={s}
+            alt=""
+            widths={[640, 1024, 1600, 2400]}
+            sizes="100vw"
+            loading={i === 0 ? "eager" : "lazy"}
+            fetchpriority={i === 0 ? "high" : "auto"}
+            class:list={["hero__slide", { "is-active": i === 0 }]}
+          />
+        ))}
+        <div class="absolute inset-0 bg-gradient-to-b from-ink/80 via-ink/45 to-ink/80"></div>
+      </div>
+
+      <header class="relative z-30">
+        <div class="header-bar relative z-10 mx-auto flex max-w-[88rem] items-center justify-between px-4 py-4 sm:px-8 sm:py-6">
+          <a href="/" class="font-display text-lg uppercase leading-none tracking-wide sm:text-2xl">Rock Ma</a>
+
+          <nav aria-label="Primary" class="hidden md:block">
+            <ul class="flex items-center gap-8 text-[0.95rem]">
+              {nav.map((n) => (
+                <li><a href={n.href} class="nav-link py-2">{n.label}</a></li>
+              ))}
+            </ul>
+          </nav>
+
+          <button
+            type="button"
+            id="menu-toggle"
+            class="burger -mr-2 grid h-11 w-11 place-items-center md:hidden"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+            aria-label="Open menu"
+          >
+            <span class="burger__bar burger__bar--1"></span>
+            <span class="burger__bar burger__bar--2"></span>
+          </button>
+        </div>
+
+        <div id="mobile-menu" class="mobile-menu md:hidden" aria-hidden="true" inert>
+          <nav aria-label="Mobile" class="mobile-menu__inner">
+            <ul class="flex flex-col">
+              {nav.map((n, i) => (
+                <li class="mobile-menu__item" style={`--i:${i}`}>
+                  <a href={n.href} class="mobile-menu__link">
+                    <span>{n.label}</span>
+                    <ArrowRight size={26} aria-hidden="true" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <p class="mobile-menu__foot" style={`--i:${nav.length}`}>Your studio, your rules.</p>
+          </nav>
+        </div>
+      </header>
+
+      <div id="main" class="relative z-10 mx-auto flex w-full max-w-[88rem] flex-1 flex-col items-center justify-center px-6 pb-24 pt-8 text-center">
+        <h1 class="hero__title font-display uppercase leading-[1.02] [text-wrap:balance] text-[clamp(2.6rem,9vw+0.4rem,6rem)] lg:text-[clamp(6rem,9.5vw,13rem)]">
+          Make your sound.
+        </h1>
+        <p class="hero__lede mt-5 max-w-[34ch] text-[1.05rem] leading-snug text-bone/90 sm:max-w-[44ch] sm:text-xl lg:mt-8 lg:max-w-[52ch] lg:text-[clamp(1.5rem,1.9vw,2.4rem)]">
+          The right gear changes everything. From your first chord to your next studio masterpiece, find the equipment that brings your sound to life.
+        </p>
+
+        <div class="hero__dots absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-2" role="tablist" aria-label="Hero slides">
+          {slides.map((_, i) => (
+            <button type="button" role="tab" aria-label={`Slide ${i + 1}`} aria-selected={i === 0 ? "true" : "false"} data-dot={i} class="dot"></button>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section id="categories" class="on-light mx-auto max-w-[88rem] px-4 pb-4 pt-10 sm:px-8 sm:pt-16" aria-labelledby="cat-h">
+      <h2 id="cat-h" class="text-2xl font-bold leading-tight sm:text-4xl">Shop by category</h2>
+      <p class="mt-2 max-w-[38ch] text-graphite sm:mt-3 sm:text-xl">Find your sound, everything you need to create, perform, and produce.</p>
+
+      <ul class="mt-6 grid gap-4 sm:mt-10 md:grid-cols-3 md:gap-6">
+        {categories.map((c) => (
+          <li>
+            <a href="#best-sellers" class="cat group relative flex h-[10.5rem] items-end overflow-hidden rounded-lg bg-ink text-bone sm:h-[14rem] md:h-[28rem]">
+              <Image
+                src={c.image}
+                alt=""
+                widths={[480, 720, 1000, 1400]}
+                sizes="(min-width: 768px) 33vw, 100vw"
+                class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 [transition-timing-function:var(--ease-out)] group-hover:scale-105"
+                style={`object-position:${c.pos}`}
+              />
+              <span class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-ink/10 transition-opacity duration-500 group-hover:from-ink/90" aria-hidden="true"></span>
+              <span class="relative flex w-full items-end justify-between gap-3 p-4 sm:p-6">
+                <span>
+                  <span class="block text-xl font-bold leading-tight sm:text-2xl">{c.title}</span>
+                  <span class="mt-1 block text-[1.02rem] text-bone/90 sm:text-lg">Find your signature sound.</span>
+                </span>
+                <ArrowRight size={22} class="mb-1 shrink-0 -translate-x-2 opacity-0 transition-all duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100" />
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- BEST SELLERS -->
+    <section id="best-sellers" class="on-light mx-auto max-w-[88rem] px-4 pb-14 pt-12 sm:px-8 sm:pb-24 sm:pt-20" aria-labelledby="best-h">
+      <h2 id="best-h" class="text-2xl font-bold leading-tight sm:text-4xl">Best sellers</h2>
+      <p class="mt-2 max-w-[40ch] text-graphite sm:mt-3 sm:text-xl">The gear everyone's playing, your next favorite piece of equipment might be right here.</p>
+
+      <ul class="mt-6 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-5 lg:grid-cols-4">
+        {products.map((p) => <ProductCard {...p} />)}
+      </ul>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta relative isolate overflow-hidden bg-ink text-bone" aria-labelledby="cta-h">
+      <Image
+        src={ctaImg}
+        alt=""
+        widths={[640, 1024, 1600, 2400]}
+        sizes="100vw"
+        class="absolute inset-0 -z-10 h-full w-full object-cover"
+        aria-hidden="true"
+      />
+      <div class="absolute inset-0 -z-10 bg-gradient-to-b from-ink/75 via-umber/60 to-ink/85" aria-hidden="true"></div>
+      <div class="mx-auto flex max-w-[88rem] flex-col items-center px-6 py-16 text-center sm:py-28">
+        <p class="text-sm uppercase tracking-[0.14em] text-silver sm:text-base">Your studio, your rules</p>
+        <h2 id="cta-h" class="mt-4 max-w-[18ch] font-display text-[clamp(2.1rem,6vw+0.6rem,4.5rem)] uppercase leading-[1.05] [text-wrap:balance]">
+          Build a setup that inspires you.
+        </h2>
+        <p class="mt-5 max-w-[40ch] text-lg leading-snug text-bone/90 sm:max-w-[52ch] sm:text-xl">
+          From studio monitors to MIDI controllers, get everything you need to turn ideas into finished tracks.
+        </p>
+        <a href="#categories" class="btn mt-8 inline-flex items-center gap-2 rounded-sm border-2 border-steel px-6 py-3 text-base">
+          Explore studio essentials
+          <ArrowRight size={18} class="btn__arrow" />
+        </a>
+      </div>
+    </section>
+
+    <!-- WHY SHOP -->
+    <section id="why" class="on-light mx-auto max-w-[88rem] px-4 pb-6 pt-16 sm:px-8 sm:pt-28" aria-labelledby="why-h">
+      <h2 id="why-h" class="text-2xl font-bold leading-tight sm:text-4xl">Why shop with us?</h2>
+      <ul class="why mt-8 grid gap-x-10 gap-y-8 sm:mt-12 sm:grid-cols-2 lg:grid-cols-4">
+        {reasons.map((r) => (
+          <li class="why__item border-t border-graphite/40 pt-5">
+            <r.icon size={30} stroke-width={1.4} class="why__icon text-graphite" aria-hidden="true" />
+            <h3 class="mt-5 text-xl font-bold leading-snug">{r.title}</h3>
+            <p class="mt-2 max-w-[30ch] text-lg leading-snug text-graphite">{r.text}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section id="newsletter" class="on-light mx-auto max-w-[88rem] px-4 pb-16 pt-12 sm:px-8 sm:pb-28 sm:pt-20" aria-labelledby="news-h">
+      <div class="news relative overflow-hidden rounded-2xl bg-coal p-6 text-bone sm:p-12 lg:p-16">
+        <p class="text-sm uppercase tracking-[0.14em] text-steel sm:text-base">The Sound Letter</p>
+        <h2 id="news-h" class="mt-3 font-display text-[clamp(2.2rem,5vw+0.5rem,5rem)] uppercase leading-[1.05]">Good gear. No noise.</h2>
+        <p class="mt-5 max-w-[46ch] text-lg leading-snug text-bone/90 sm:text-2xl">Get new arrivals, gear guides, exclusive offers, and inspiration for your next project.</p>
+        <p class="mt-4 text-base text-silver sm:text-lg">Join the list and stay in tune.</p>
+
+        <form id="news-form" class="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row" novalidate>
+          <label for="news-email" class="sr-only">Email address</label>
+          <input
+            id="news-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="Enter your email"
+            required
+            aria-describedby="news-msg"
+            class="news__input min-w-0 flex-1 rounded-full border border-steel/60 bg-transparent px-6 py-4 text-lg text-bone placeholder:text-silver/70"
+          />
+          <button type="submit" class="news__btn inline-flex items-center justify-center gap-2 rounded-full bg-bone px-7 py-4 text-lg text-ink">
+            Sign me up
+            <ArrowUpRight size={18} class="btn__arrow" />
+          </button>
+        </form>
+        <p id="news-msg" class="mt-3 min-h-[1.5rem] text-base text-silver" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="foot relative overflow-hidden bg-ink text-bone">
+      <div class="mx-auto max-w-[88rem] px-4 pt-14 sm:px-8 sm:pt-20">
+        <div class="grid gap-12 lg:grid-cols-[1.2fr_2fr]">
+          <div>
+            <p class="max-w-[16ch] font-display text-3xl uppercase leading-[1.05] sm:text-5xl">Your studio, your rules.</p>
+            <a href="#categories" class="btn mt-7 inline-flex items-center gap-2 rounded-sm border-2 border-steel px-5 py-2.5 text-base">
+              Shop all gear <ArrowRight size={18} class="btn__arrow" />
+            </a>
+          </div>
+          <nav aria-label="Footer" class="grid grid-cols-2 gap-10 sm:grid-cols-3">
+            {footerCols.map((c) => (
+              <div>
+                <h2 class="text-sm uppercase tracking-[0.14em] text-silver">{c.title}</h2>
+                <ul class="mt-4 space-y-2.5 text-lg">
+                  {c.links.map(([label, href]) => (
+                    <li><a href={href} class="nav-link inline-block py-0.5">{label}</a></li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </nav>
+        </div>
+
+        <div class="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-graphite pt-6 text-base text-silver sm:mt-20">
+          <p>© {new Date().getFullYear()} Rock Ma. All rights reserved.</p>
+          <a href="#hero" id="to-top" class="nav-link inline-flex items-center gap-2 py-1">Back to top <ArrowUp size={16} /></a>
+        </div>
+      </div>
+      <p class="foot__mark select-none whitespace-nowrap text-center font-display uppercase text-graphite" aria-hidden="true">Rock Ma</p>
+    </footer>
+
+    <script>
+      import Lenis from "lenis";
+      import "lenis/dist/lenis.css";
+
+      const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const heroLayer = document.querySelector<HTMLElement>(".hero__slides");
+      const heroEl = document.querySelector<HTMLElement>(".hero");
+      const parallax = () => {
+        if (!heroLayer || !heroEl || reduceMotion) return;
+        const y = Math.min(window.scrollY, heroEl.offsetHeight);
+        heroLayer.style.transform = `translate3d(0, ${y * 0.25}px, 0)`;
+      };
+
+      if (!reduceMotion) {
+        const lenis = new Lenis({ duration: 1.2, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
+        (window as any).__lenis = lenis;
+        lenis.on("scroll", parallax);
+        const raf = (time: number) => { lenis.raf(time); requestAnimationFrame(raf); };
+        requestAnimationFrame(raf);
+        document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
+          a.addEventListener("click", (e) => {
+            const id = a.getAttribute("href");
+            const target = id && id.length > 1 ? document.querySelector<HTMLElement>(id) : null;
+            if (target) { e.preventDefault(); lenis.start(); lenis.scrollTo(target, { offset: 0 }); }
+          });
+        });
+      }
+
+      const form = document.getElementById("news-form") as HTMLFormElement;
+      const email = document.getElementById("news-email") as HTMLInputElement;
+      const msg = document.getElementById("news-msg") as HTMLElement;
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (!email.validity.valid || !email.value.trim()) {
+          msg.textContent = "Enter a valid email address, like name@example.com.";
+          msg.classList.add("is-error");
+          email.setAttribute("aria-invalid", "true");
+          email.focus();
+          return;
+        }
+        email.removeAttribute("aria-invalid");
+        msg.classList.remove("is-error");
+        msg.textContent = "You're on the list. Watch your inbox.";
+        form.reset();
+      });
+
+      const toggle = document.getElementById("menu-toggle") as HTMLButtonElement;
+      const menu = document.getElementById("mobile-menu") as HTMLElement;
+      const setMenu = (open: boolean) => {
+        toggle.setAttribute("aria-expanded", String(open));
+        toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        menu.setAttribute("aria-hidden", String(!open));
+        menu.toggleAttribute("inert", !open);
+        document.documentElement.classList.toggle("menu-open", open);
+        const lenis = (window as any).__lenis;
+        if (lenis) open ? lenis.stop() : lenis.start();
+        if (open) menu.querySelector<HTMLElement>("a")?.focus({ preventScroll: true });
+      };
+      const isOpen = () => toggle.getAttribute("aria-expanded") === "true";
+      toggle.addEventListener("click", () => setMenu(!isOpen()));
+      menu.addEventListener("click", (e) => { if ((e.target as HTMLElement).closest("a")) setMenu(false); });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape" && isOpen()) { setMenu(false); toggle.focus(); } });
+      matchMedia("(min-width: 768px)").addEventListener("change", (m) => { if (m.matches && isOpen()) setMenu(false); });
+
+      const slides = [...document.querySelectorAll<HTMLElement>(".hero__slide")];
+      const dots = [...document.querySelectorAll<HTMLButtonElement>(".dot")];
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let current = 0;
+      let timer: number | undefined;
+      const show = (n: number) => {
+        current = (n + slides.length) % slides.length;
+        slides.forEach((s, i) => s.classList.toggle("is-active", i === current));
+        dots.forEach((d, i) => d.setAttribute("aria-selected", String(i === current)));
+      };
+      const start = () => { if (!reduce) timer = window.setInterval(() => show(current + 1), 6000); };
+      dots.forEach((d, i) => d.addEventListener("click", () => { clearInterval(timer); show(i); start(); }));
+      start();
+    </script>
+
+    <style is:global>
+      .hero__slide {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transform: scale(1.06);
+        transition: opacity 1.2s var(--ease-out), transform 7s linear;
+      }
+      .hero__slide.is-active {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .hero__title,
+      .hero__lede {
+        animation: rise 1s var(--ease-out) both;
+      }
+      .hero__lede { animation-delay: 0.18s; }
+      .hero__dots { animation: rise 1s var(--ease-out) 0.4s both; }
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(18px); filter: blur(6px); }
+        to { opacity: 1; transform: none; filter: blur(0); }
+      }
+
+      .dot {
+        position: relative;
+        width: 2.25rem;
+        height: 1.5rem;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+      }
+      .dot::after {
+        content: "";
+        position: absolute;
+        left: 0; right: 0; top: 50%;
+        height: 3px;
+        translate: 0 -50%;
+        border-radius: 2px;
+        background: rgb(230 231 227 / 0.4);
+        transition: background-color 0.4s, height 0.3s;
+      }
+      .dot[aria-selected="true"]::after { background: var(--color-bone); }
+      .dot:hover::after { background: var(--color-bone); height: 5px; }
+
+      .nav-link {
+        position: relative;
+      }
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 0; right: 0; bottom: 0.35rem;
+        height: 1px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s var(--ease-out);
+      }
+      .nav-link:hover::after { transform: scaleX(1); }
+
+      .burger { position: relative; }
+      .burger__bar {
+        position: absolute;
+        left: 50%;
+        width: 22px;
+        height: 2px;
+        margin-left: -11px;
+        background: currentColor;
+        border-radius: 2px;
+        transition: transform 0.5s var(--ease-out), top 0.5s var(--ease-out);
+      }
+      .burger__bar--1 { top: calc(50% - 5px); }
+      .burger__bar--2 { top: calc(50% + 3px); }
+      .burger[aria-expanded="true"] .burger__bar--1 { top: calc(50% - 1px); transform: rotate(45deg); }
+      .burger[aria-expanded="true"] .burger__bar--2 { top: calc(50% - 1px); transform: rotate(-45deg); }
+
+      .mobile-menu {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        display: flex;
+        background: var(--color-ink);
+        clip-path: circle(0px at calc(100% - 1.75rem) 2.25rem);
+        visibility: hidden;
+        transition: clip-path 0.75s var(--ease-out), visibility 0s linear 0.75s;
+      }
+      .menu-open .mobile-menu {
+        clip-path: circle(150vmax at calc(100% - 1.75rem) 2.25rem);
+        visibility: visible;
+        transition: clip-path 0.9s var(--ease-out), visibility 0s;
+      }
+      .mobile-menu__inner {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        padding: 6rem 1rem 2rem;
+        gap: 2rem;
+      }
+      .mobile-menu__item { border-top: 1px solid var(--color-graphite); overflow: hidden; }
+      .mobile-menu__item:last-child { border-bottom: 1px solid var(--color-graphite); }
+      .mobile-menu__link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.1rem 0.25rem;
+        font-family: var(--font-display);
+        font-size: clamp(1.9rem, 8vw, 3rem);
+        text-transform: uppercase;
+        line-height: 1.05;
+        transform: translateY(110%);
+        transition: transform 0.35s var(--ease-out), color 0.3s;
+      }
+      .mobile-menu__link svg { opacity: 0.5; transition: transform 0.4s var(--ease-out), opacity 0.3s; }
+      .mobile-menu__link:hover { color: var(--color-silver); }
+      .mobile-menu__link:hover svg { opacity: 1; transform: translateX(6px); }
+      .mobile-menu__foot {
+        color: var(--color-silver);
+        font-size: 1.05rem;
+        opacity: 0;
+        transform: translateY(12px);
+        transition: opacity 0.3s, transform 0.3s var(--ease-out);
+      }
+      .menu-open .mobile-menu__link {
+        transform: none;
+        transition: transform 0.9s var(--ease-out) calc(0.25s + var(--i) * 0.07s), color 0.3s;
+      }
+      .menu-open .mobile-menu__foot {
+        opacity: 1;
+        transform: none;
+        transition: opacity 0.8s ease calc(0.35s + var(--i) * 0.07s), transform 0.8s var(--ease-out) calc(0.35s + var(--i) * 0.07s);
+      }
+
+      .btn {
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+      }
+      .btn:hover {
+        background: var(--color-bone);
+        border-color: var(--color-bone);
+        color: var(--color-ink);
+      }
+      .foot__mark {
+        font-size: 30.5vw;
+        margin: 2rem 0 0;
+        line-height: 1;
+        padding-bottom: 0;
+        transition: color 0.6s var(--ease-out);
+      }
+      .foot:hover .foot__mark { color: var(--color-silver); }
+
+      .why__item { transition: border-color 0.4s; }
+      .why__icon { transition: transform 0.5s var(--ease-out), color 0.3s; }
+      .why__item:hover { border-color: var(--color-ink); }
+      .why__item:hover .why__icon { transform: translateY(-3px) rotate(-6deg); color: var(--color-ink); }
+
+      .news__input { transition: border-color 0.3s, background-color 0.3s; }
+      .news__input:hover { border-color: var(--color-silver); }
+      .news__input:focus-visible { outline: 2px solid var(--color-steel); outline-offset: 2px; border-color: var(--color-bone); border-radius: 9999px; }
+      .news__input[aria-invalid="true"] { border-color: #e0a29a; }
+      .news__btn { transition: background-color 0.3s, transform 0.3s var(--ease-out); }
+      .news__btn:hover { background: var(--color-silver); }
+      .news__btn:hover .btn__arrow { transform: translate(3px, -3px); }
+      #news-msg.is-error { color: #e0a29a; }
+
+      .btn__arrow { transition: transform 0.3s var(--ease-out); }
+      .btn:hover .btn__arrow { transform: translateX(4px); }
+    </style>
+  </body>
+</html>

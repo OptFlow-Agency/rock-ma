@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Graen Metal";
+  src: url("/fonts/GraenMetal-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Caudex";
+  src: url("/fonts/caudex-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Caudex";
+  src: url("/fonts/caudex-400i.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Caudex";
+  src: url("/fonts/caudex-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-ink: #030105;
+  --color-coal: #202020;
+  --color-graphite: #313030;
+  --color-umber: #1d1c17;
+  --color-silver: #bbbbbb;
+  --color-bone: #e6e7e3;
+  --color-steel: #8791a0;
+
+  --font-display: "Graen Metal", "Caudex", serif;
+  --font-text: "Caudex", Georgia, serif;
+}
+
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  color-scheme: light;
+}
+
+html {
+  background: var(--color-ink);
+}
+
+body {
+  overflow-x: clip;
+  margin: 0;
+  background: var(--color-bone);
+  color: var(--color-ink);
+  font-family: var(--font-text);
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-steel);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-steel);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.on-light :focus-visible {
+  outline-color: var(--color-graphite);
+}
+
+html {
+  scrollbar-color: var(--color-graphite) var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
